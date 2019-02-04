@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="swimple:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="swimple.war">
+      <element id="artifact" artifact-name="swimple:war exploded" />
+    </root>
+  </artifact>
+</component>
