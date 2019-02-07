@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-      <h1>Dit is een geudpdate versie</h1>
+      <h1>Als we nu iets wijzigen wordt het realtime gewijzigd. WOWO</h1>
     <p>
       For a guide and recipes on how to configure / customize this project,<br>
       check out the

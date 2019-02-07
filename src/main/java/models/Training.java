@@ -19,6 +19,10 @@ public class Training {
     public Training() {
     }
 
+    public int getId() {
+        return id;
+    }
+
     public Date getDate() {
         return date;
     }

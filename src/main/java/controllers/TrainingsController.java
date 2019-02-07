@@ -23,7 +23,11 @@ public class TrainingsController {
     public JsonArray getAll() {
         JsonArrayBuilder builder = Json.createArrayBuilder();
         for (Training training : trainingService.getAll()) {
-            builder.add(Json.createObjectBuilder().add("description", training.getDescription()));
+            builder.add(
+                    Json.createObjectBuilder().add("id", training.getId())
+                            .add("description", training.getDescription())
+                            .add("date", training.getDate().toString())
+            );
         }
         return builder.build();
     }
