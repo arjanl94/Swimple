@@ -1,19 +1,19 @@
 <template>
   <div id="app">
-    <div class="bg-blue text-white h-64 flex justify-center items-center flex-col mb-4">
-      <h1>Hello Swimple</h1>
-      <p>This app is built with vue.js</p>
+    <navigation-bar />
+    <div class="container mx-auto px-4">
+      <dashboard />
     </div>
-    <TrainingList />
   </div>
 </template>
 
 <script>
+  import NavigationBar from  './components/NavigationBar';
 import TrainingList from './components/TrainingList.vue';
+  import Dashboard from "./components/Dashboard";
 
 export default {
   name: 'app',
-
-    components: { TrainingList }
+    components: {Dashboard, TrainingList, NavigationBar }
 }
 </script>
