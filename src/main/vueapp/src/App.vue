@@ -2,18 +2,17 @@
   <div id="app">
     <navigation-bar />
     <div class="container mx-auto px-4">
-      <dashboard />
+      <router-view />
     </div>
+    <div class="h-16"></div>
   </div>
 </template>
 
 <script>
   import NavigationBar from  './components/NavigationBar';
-import TrainingList from './components/TrainingList.vue';
-  import Dashboard from "./components/Dashboard";
 
 export default {
   name: 'app',
-    components: {Dashboard, TrainingList, NavigationBar }
+    components: { NavigationBar }
 }
 </script>

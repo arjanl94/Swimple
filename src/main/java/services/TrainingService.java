@@ -15,7 +15,13 @@ public class TrainingService {
     private EntityManager em;
 
     public List<Training> getAll() {
-        Query query = em.createQuery("select t from Training t", Training.class);
+        Query query = em.createQuery("select t from Training t order by t.startDate asc ", Training.class);
         return query.getResultList();
+    }
+
+    public Training get(String id) {
+        Query query = em.createQuery("select t from Training t where t.id = :id", Training.class);
+        query.setParameter("id", Integer.parseInt(id));
+        return (Training) query.getSingleResult();
     }
 }

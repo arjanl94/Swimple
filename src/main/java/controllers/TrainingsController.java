@@ -9,6 +9,7 @@ import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
@@ -20,16 +21,15 @@ public class TrainingsController {
 
     @GET
     @Produces("application/json")
-    public JsonArray getAll() {
-        JsonArrayBuilder builder = Json.createArrayBuilder();
-        for (Training training : trainingService.getAll()) {
-            builder.add(
-                    Json.createObjectBuilder().add("id", training.getId())
-                            .add("description", training.getDescription())
-                            .add("date", training.getDate().toString())
-            );
-        }
-        return builder.build();
+    public Response index() {
+        return Response.ok(trainingService.getAll()).build();
+    }
+
+    @GET
+    @Path("{id}")
+    @Produces("application/json")
+    public Response show(@PathParam("id") String id) {
+        return Response.ok(trainingService.get(id)).build();
     }
 
 }

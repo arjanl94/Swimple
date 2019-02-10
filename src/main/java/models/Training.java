@@ -13,8 +13,11 @@ public class Training {
     @Id
     @GeneratedValue
     private int id;
-    private Date date;
+    private Date startDate;
+    private Date endDate;
     private String description;
+    private String location;
+    private String workout;
 
     public Training() {
     }
@@ -23,12 +26,20 @@ public class Training {
         return id;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setStartDate(Date date) {
+        this.startDate = date;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
     public String getDescription() {
@@ -37,5 +48,21 @@ public class Training {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getWorkout() {
+        return workout;
+    }
+
+    public void setWorkout(String workout) {
+        this.workout = workout;
     }
 }
