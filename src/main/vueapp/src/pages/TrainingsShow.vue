@@ -10,7 +10,7 @@
       </div>
       <div class="bg-white rounded border border-grey-lighter p-6 text-lg leading-normal">
         <div v-if="!training.workout" class="text-center text-grey my-16">No workout</div>
-        {{ training.workout }}
+        <div v-if="training.workout" v-html="markdown"></div>
       </div>
     </div>
     <div class="w-1/4 px-4">
@@ -26,6 +26,7 @@
 <script>
     import { mapState } from "vuex";
     import moment from 'moment';
+    import marked from 'marked';
 
     export default {
         name: "trainings-show",
@@ -40,6 +41,10 @@
           endDate: function() {
               if (!this.training) return;
               return moment(this.training.endDate.replace('[UTC]', ''));
+          },
+          markdown() {
+              if (!this.training.workout) return;
+            return marked(this.training.workout, { sanitize: true});
           }
         },
         created() {
