@@ -113,3 +113,5 @@ target/
 
 # End of https://www.gitignore.io/api/java,intellij,java-web
 *node_modules
+
+src/main/webapp/
