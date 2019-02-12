@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <notices></notices>
     <navigation-bar />
     <div class="container mx-auto px-4">
       <router-view />
@@ -10,9 +11,10 @@
 
 <script>
   import NavigationBar from  './components/NavigationBar';
+  import Notices from "./components/Notices";
 
 export default {
   name: 'app',
-    components: { NavigationBar }
+    components: { Notices, NavigationBar }
 }
 </script>

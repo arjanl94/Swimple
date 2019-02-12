@@ -24,4 +24,13 @@ public class TrainingService {
         query.setParameter("id", Integer.parseInt(id));
         return (Training) query.getSingleResult();
     }
+
+    public Training create(Training training) {
+        em.persist(training);
+        return training;
+    }
+
+    public Training update(Training training) {
+        return em.merge(training);
+    }
 }

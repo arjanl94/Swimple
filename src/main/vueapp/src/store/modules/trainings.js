@@ -16,13 +16,31 @@ const actions = {
     },
 
     getTraining({commit}, id) {
-        commit("SET_TRAINING", null);
+        commit("CLEAR_TRAINING");
 
         fetch(`/swimple/api/trainings/${id}`)
             .then(resp => resp.json())
             .then(data => {
                 commit("SET_TRAINING", data);
             })
+    },
+
+    updateTraining({ commit, dispatch }, data) {
+        return new Promise((resolve, reject) => {
+            fetch(`/swimple/api/trainings/${data.id}`, {
+                method: 'PUT',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            }).then(resp => resp.json())
+            .then(data => {
+                commit('SET_TRAINING', data);
+                dispatch('notices/addNotice', 'Succesfully saved training!', { root: true });
+                resolve(data);
+            })
+            .catch(error => {
+                reject();
+            });
+        });
     }
 }
 
@@ -34,6 +52,10 @@ const mutations = {
 
     SET_TRAINING: (state, data) => {
         state.entity = data
+    },
+
+    CLEAR_TRAINING: (state) => {
+        state.entity = null
     }
 }
 

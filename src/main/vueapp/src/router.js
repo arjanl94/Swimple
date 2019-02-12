@@ -4,6 +4,7 @@ import Dashboard from "./pages/Dashboard";
 import Calendar from "./pages/Calendar";
 import Users from "./pages/Users";
 import TrainingsShow from "./pages/TrainingsShow";
+import TrainingsEdit from "./pages/TrainingsEdit";
 
 Vue.use(Router);
 
@@ -32,7 +33,7 @@ export default new Router({
         {
             path: '/trainings/:id/edit',
             name: 'trainings#edit',
-            component: TrainingsShow
+            component: TrainingsEdit
         }
     ]
 })
