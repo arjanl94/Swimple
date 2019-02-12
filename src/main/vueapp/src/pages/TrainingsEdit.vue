@@ -51,10 +51,11 @@
         </div>
       </div>
       <div>
-        <textarea-autosize
+        <textarea
           class="block w-full p-6 font-mono border-grey-lighter border-t"
           v-model="training.workout"
-        ></textarea-autosize>
+          data-autosize
+        ></textarea>
       </div>
       <div class="p-2 border-grey-lighter border-t flex flex-row-reverse">
         <button
@@ -73,6 +74,8 @@
 
 <script>
 import Datepicker from "vuejs-datepicker/src/components/Datepicker";
+import autosize from "autosize";
+
 export default {
   name: "trainings-edit",
   components: { Datepicker },
@@ -110,6 +113,10 @@ export default {
     }
 
     this.setTraining();
+  },
+
+  mounted() {
+    autosize(document.querySelectorAll('[data-autosize]'));
   }
 };
 </script>
