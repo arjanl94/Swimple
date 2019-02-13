@@ -13,9 +13,8 @@
           class="block no-underline px-4 py-2 text-grey border-grey-light hover:border-blue hover:bg-blue hover:text-white border-2 rounded"
         >Edit</router-link>
       </div>
-      <div class="bg-white rounded border border-grey-lighter p-6 text-lg leading-normal">
+      <div class="markdown bg-white rounded border border-grey-lighter p-6 text-lg leading-normal" v-html="markdown">
         <div v-if="!training.workout" class="text-center text-grey my-16">No workout</div>
-        <div v-if="training.workout" v-html="markdown"></div>
       </div>
     </div>
     <div class="w-1/4 px-4">
@@ -74,12 +73,20 @@ export default {
 };
 </script>
 
-<style scoped>
-p {
-  margin-bottom: 1rem;
-}
+<style>
+  .markdown p {
+    margin-bottom: 1rem;
+  }
 
-ul {
-  margin-bottom: 1rem;
-}
+  .markdown li p {
+    margin-bottom: 0;
+  }
+
+  .markdown ul {
+    margin-bottom: 1rem;
+  }
+
+  .markdown h2 {
+    margin-bottom: 1.25rem;
+  }
 </style>

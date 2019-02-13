@@ -12,25 +12,7 @@
             v-model="training.description"
           >
         </div>
-        <div class="flex -mx-2 mb-4">
-          <div class="w-1/2 px-2">
-            <label class="mb-2 block">Date</label>
-            <datepicker
-              id="date"
-              v-model="training.startDate"
-              input-class="bg-grey-lightest p-4 rounded w-full"
-              calendar-class="calendar-picker"
-            ></datepicker>
-          </div>
-          <div class="w-1/4 px-2">
-            <label class="mb-2 block">Start</label>
-            <input type="time" class="block w-full bg-grey-lightest p-4 rounded">
-          </div>
-          <div class="w-1/4 px-2">
-            <label class="mb-2 block">End</label>
-            <input type="time" class="block w-full bg-grey-lightest p-4 rounded">
-          </div>
-        </div>
+        <date-picker :training="training" :on-change="datepickerDidChange"/>
         <div class="flex -mx-2">
           <div class="w-1/2 px-2">
             <label class="mb-2 block">Location</label>
@@ -73,15 +55,16 @@
 </template>
 
 <script>
-import Datepicker from "vuejs-datepicker/src/components/Datepicker";
-import autosize from "autosize";
+    import autosize from "autosize";
+    import DatePicker from "../components/DatePicker";
 
-export default {
+    export default {
   name: "trainings-edit",
-  components: { Datepicker },
+  components: {DatePicker},
   data: function() {
     return {
-      training: null
+      training: null,
+        startDate: null,
     };
   },
 
@@ -101,7 +84,12 @@ export default {
       this.training = JSON.parse(
         JSON.stringify(this.$store.state.trainings.entity)
       );
-    }
+    },
+
+      datepickerDidChange(values) {
+        this.training.startDate = values.startTime;
+        this.training.endDate = values.endTime;
+      }
   },
 
   async created() {
