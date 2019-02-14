@@ -1,6 +1,6 @@
 <template>
-  <div v-if="training" class="flex -mx-4">
-    <div class="w-3/4 px-4">
+  <div v-if="training" class="flex flex-col md:flex-row -mx-4">
+    <div class="w-full md:w-3/4 px-4 mb-8 md:mb-0">
       <div class="mb-8 flex justify-between items-center">
         <div>
           <h1 class="mb-2">{{ training.description }}</h1>
@@ -13,11 +13,12 @@
           class="block no-underline px-4 py-2 text-grey border-grey-light hover:border-blue hover:bg-blue hover:text-white border-2 rounded"
         >Edit</router-link>
       </div>
-      <div class="markdown bg-white rounded border border-grey-lighter p-6 text-lg leading-normal" v-html="markdown">
+      <div class="markdown bg-white rounded border border-grey-lighter p-6 text-lg leading-normal">
         <div v-if="!training.workout" class="text-center text-grey my-16">No workout</div>
+        <div v-html="markdown" class="markdown"></div>
       </div>
     </div>
-    <div class="w-1/4 px-4">
+    <div class="w-full md:w-1/4 px-4">
       <h2 class="text-xl mb-4">Comments</h2>
       <div class="flex flex-col justify-center items-center py-32">
         <svg

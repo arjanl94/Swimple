@@ -1,6 +1,9 @@
+import { trainingService } from "../../services/training.services";
+import { router } from '../../router';
 
-// initial state
+//Initial state
 const state = {
+    status: {},
     all: [],
     entity: null
 }
@@ -8,44 +11,49 @@ const state = {
 // actions
 const actions = {
     getAllTrainings({ commit }) {
-        fetch('/swimple/api/trainings')
-            .then(resp => resp.json())
-            .then(data => {
-                commit("SET_TRAININGS", data);
-            });
+        commit('REQUEST_TRAININGS');
+
+        trainingService.getAll().then(trainings => {
+            commit("SET_TRAININGS", trainings);
+        });
     },
 
     getTraining({commit}, id) {
         commit("CLEAR_TRAINING");
 
-        fetch(`/swimple/api/trainings/${id}`)
-            .then(resp => resp.json())
-            .then(data => {
-                commit("SET_TRAINING", data);
-            })
+        trainingService.get(id).then(training => {
+            commit("SET_TRAINING", training);
+        });
     },
 
     updateTraining({ commit, dispatch }, data) {
-        return new Promise((resolve, reject) => {
-            fetch(`/swimple/api/trainings/${data.id}`, {
-                method: 'PUT',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(data)
-            }).then(resp => resp.json())
-            .then(data => {
-                commit('SET_TRAINING', data);
+        trainingService.update(data.id, data)
+            .then(training => {
+                commit('SET_TRAINING', training);
                 dispatch('notices/addNotice', 'Succesfully saved training!', { root: true });
-                resolve(data);
-            })
-            .catch(error => {
-                reject();
+                router.push({ name: "trainings#show", params: { id: training.id }});
+            }).catch(error => {
+                // return Promise.reject(error);
             });
+    },
+
+    createTraining({ commit, dispatch }, data) {
+        trainingService.create(data).then(training => {
+            commit('SET_TRAINING', training);
+            dispatch('notices/addNotice', 'Succesfully saved training!', { root: true });
+            router.push({ name: "trainings#show", params: { id: training.id }});
+        }).catch(error => {
+            // return Promise.reject(error);
         });
     }
 }
 
 // mutations
 const mutations = {
+    REQUEST_TRAININGS: (state) => {
+      state.status = { isLoading: true }
+    },
+
     SET_TRAININGS: (state, data) => {
         state.all = data
     },

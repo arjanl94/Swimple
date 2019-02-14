@@ -55,8 +55,8 @@
             const startMoment = moment(this.training.startDate.replace("[UTC]", ""));
             const endMoment = moment(this.training.endDate.replace("[UTC]", ""));
 
-            this.startTime = startMoment.format('H:mm');
-            this.endTime = endMoment.format('H:mm');
+            this.startTime = startMoment.format('HH:mm');
+            this.endTime = endMoment.format('HH:mm');
 
             this.date = startMoment.format('Y-M-D');
         }

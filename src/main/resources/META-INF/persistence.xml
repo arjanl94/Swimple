@@ -10,7 +10,7 @@
         <properties>
             <property name="hibernate.temp.use_jdbc_metadata_defaults" value="false" />
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgresPlusDialect"/>
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
             <!--<property name="javax.persistence.schema-generation.database.action" value="drop-and-create" />-->

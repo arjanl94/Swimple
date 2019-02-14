@@ -1,5 +1,6 @@
 package controllers;
 
+import filters.Authenticated;
 import models.Training;
 import services.TrainingService;
 
@@ -13,6 +14,7 @@ import javax.ws.rs.core.Response;
 
 @Path("/trainings")
 @Produces("application/json")
+@Authenticated
 public class TrainingsController {
 
     @Inject

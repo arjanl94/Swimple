@@ -1,7 +1,9 @@
 package models;
 
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import javax.json.bind.annotation.JsonbNillable;
 import javax.persistence.*;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
@@ -9,6 +11,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "trainings")
+@JsonbNillable
 public class Training {
 
     @Id
@@ -31,6 +34,12 @@ public class Training {
 
     @Column(columnDefinition="TEXT")
     private String workout;
+
+    @CreationTimestamp
+    private Date createdAt;
+
+    @UpdateTimestamp
+    private Date updatedAt;
 
     public Training() {
     }
@@ -81,5 +90,13 @@ public class Training {
 
     public void setWorkout(String workout) {
         this.workout = workout;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
     }
 }
