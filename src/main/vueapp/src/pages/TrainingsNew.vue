@@ -10,6 +10,7 @@
             placeholder="Description"
             class="block bg-grey-lightest p-4 rounded w-full mb-4"
             v-model="training.description"
+            autocomplete="off"
           >
         </div>
         <date-picker :training="training" :on-change="datepickerDidChange"/>
@@ -21,6 +22,7 @@
               v-model="training.location"
               class="block w-full bg-grey-lightest p-4 rounded"
               placeholder="Location"
+              autocomplete="off"
             >
           </div>
           <div class="w-1/2 px-2">
@@ -29,6 +31,7 @@
               type="text"
               class="block w-full bg-grey-lightest p-4 rounded"
               placeholder="Coaches"
+              autocomplete="off"
             >
           </div>
         </div>

@@ -5,7 +5,7 @@ const user = JSON.parse(localStorage.getItem("user"));
 const initialState = user ? { status: { loggedIn: true}, user } : { status: {}, user: null}
 
 const actions = {
-    login({ dispatch, commit }, { email, password}) {
+    login({ dispatch, commit }, { email, password }) {
         commit('LOGIN_REQUEST', { email });
 
         userService.login(email, password)
@@ -16,6 +16,20 @@ const actions = {
               commit('LOGIN_FAILURE', error);
               dispatch('notices/addNotice', "Login failed", { root: true });
             });
+    },
+
+    register({ dispatch, commit }, { name, email, password }) {
+        commit('SIGNUP_REQUEST', { email });
+
+        userService.register(name, email, password)
+            .then(user => {
+                commit('SIGNUP_SUCCESS', user);
+                router.push('/');
+            }).catch(error => {
+                commit('SIGNUP_FAILURE', error);
+                console.log(error);
+                dispatch('notices/addNotice', "Signup failed", {root: true});
+        });
     },
 
     logout({ commit }) {
@@ -38,6 +52,21 @@ const mutations = {
     LOGIN_FAILURE: (state) => {
         state.status = {};
         state.user = null;
+    },
+
+    SIGNUP_REQUEST: (state, user) => {
+        state.status = { signingUp: true };
+        state.user = user;
+    },
+
+    SIGNUP_SUCCESS: (state, user) => {
+        state.status = { loggedIn: true };
+        state.user = user;
+    },
+
+    SIGNUP_FAILURE: (state) => {
+       state.status = {};
+       state.user = null;
     },
 
     LOGOUT: (state) => {

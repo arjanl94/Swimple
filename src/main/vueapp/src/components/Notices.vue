@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed w-full">
+  <div class="fixed w-full z-50">
     <transition name="fade">
       <div
         v-for="(notice, index) in notices"

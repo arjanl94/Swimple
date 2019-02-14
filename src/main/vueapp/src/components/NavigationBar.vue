@@ -18,29 +18,10 @@
             </g>
           </svg>
         </router-link>
-        <div class="flex items-center">
-          <svg
-            class="stroke-current text-grey mr-6"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-          </svg>
-          <div class="flex items-center justify-center w-8 h-8 bg-orange rounded-full">
-            <span class="text-white block font-semibold">T</span>
-          </div>
-        </div>
+        <current-user v-if="loggedIn"></current-user>
       </div>
     </div>
-    <div class="bg-white border-grey-lighter border-b">
+    <div v-if="loggedIn" class="bg-white border-grey-lighter border-b">
       <div class="container mx-auto px-4 flex">
         <router-link to="/" class="nav-link">
           <svg
@@ -106,8 +87,17 @@
 </template>
 
 <script>
-export default {
-  name: "navigation-bar"
+    import {mapState} from "vuex";
+    import CurrentUser from "./CurrentUser";
+
+    export default {
+  name: "navigation-bar",
+    components: {CurrentUser},
+    computed: {
+      ...mapState({
+        loggedIn: state => state.auth.status.loggedIn
+      })
+    }
 };
 </script>
 

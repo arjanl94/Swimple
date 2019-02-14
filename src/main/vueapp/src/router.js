@@ -7,6 +7,7 @@ import TrainingsShow from "./pages/TrainingsShow";
 import TrainingsEdit from "./pages/TrainingsEdit";
 import TrainingsNew from "./pages/TrainingsNew";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 Vue.use(Router);
 
@@ -21,6 +22,11 @@ export const router = new Router({
             path: '/login',
             name: 'login',
             component: Login
+        },
+        {
+            path: '/register',
+            name: 'register',
+            component: Register
         },
         {
             path: '/calendar',
@@ -51,7 +57,7 @@ export const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-    const publicPages = ['/login'];
+    const publicPages = ['/login', '/register'];
     const authRequired = !publicPages.includes(to.path);
     const loggedIn = localStorage.getItem('user');
 
