@@ -1,4 +1,5 @@
 import { authHeader } from "../helpers";
+import {userService} from "./user.services";
 
 export const trainingService = {
     getAll,
@@ -14,7 +15,7 @@ function getAll() {
     }
 
     return fetch('/swimple/api/trainings', requestOptions)
-        .then(resp => resp.json())
+        .then(handleResponse)
         .then(trainings => {
             return trainings;
         });
@@ -27,7 +28,7 @@ function get(id) {
     }
 
     return fetch(`/swimple/api/trainings/${id}`, requestOptions)
-        .then(resp => resp.json())
+        .then(handleResponse)
         .then(training => {
             return training;
         });
@@ -44,7 +45,7 @@ function update(id, data) {
     }
 
     return fetch(`/swimple/api/trainings/${id}`, requestOptions)
-        .then(resp => resp.json())
+        .then(handleResponse)
         .then(training => {
             return training;
         }).catch(error => {
@@ -63,10 +64,25 @@ function create(data) {
     }
 
     return fetch('swimple/api/trainings', requestOptions)
-        .then(resp => resp.json())
+        .then(handleResponse)
         .then(training => {
             return training;
         }).catch(error => {
-            Promise.reject(error);
+            return Promise.reject(error);
         });
+}
+
+function handleResponse(response) {
+    const data = response.json();
+
+    if(!response.ok) {
+        if(response.status === 401) {
+            userService.logout();
+        }
+
+        const error = (data && data.message) || response.statusText;
+        return Promise.reject(error);
+    }
+
+    return data;
 }

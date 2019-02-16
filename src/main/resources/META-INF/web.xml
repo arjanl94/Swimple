@@ -1,0 +1,4 @@
+<context-param>
+    <param-name>jersey.config.jsonFeature</param-name>
+    <param-value>JacksonFeature</param-value>
+</context-param>

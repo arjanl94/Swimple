@@ -23,13 +23,13 @@
         <div v-if="isOpen" class="absolute bg-black rounded text-white pin-r mt-2 w-32 px-2 py-3 shadow-lg">
           <ul class="list-reset">
             <li>
-              <router-link to="/users" class="block no-underline text-white py-2 px-4 hover:bg-grey-darkest rounded">My Profile</router-link>
+              <router-link to="/users" class="block no-underline text-white p-2 hover:bg-grey-darkest rounded">My Profile</router-link>
             </li>
             <li>
-              <router-link to="/" class="block no-underline text-white py-2 px-4 hover:bg-grey-darkest rounded">Settings</router-link>
+              <router-link to="/" class="block no-underline text-white p-2 hover:bg-grey-darkest rounded">Settings</router-link>
             </li>
             <li>
-              <router-link to="/login" class="block no-underline text-white py-2 px-4 hover:bg-grey-darkest rounded">Log out</router-link>
+              <router-link to="/login" class="block no-underline text-white p-2 hover:bg-grey-darkest rounded">Log out</router-link>
             </li>
           </ul>
         </div>
@@ -76,7 +76,7 @@
   }
 
   .open-enter-active, .open-leave-active {
-    transition: all .2s ease-in-out;
+    transition: all .3s cubic-bezier(0.165, 0.84, 0.44, 1);
     transform-origin: top center;
   }
   .open-enter, .open-leave-to /* .fade-leave-active below version 2.1.8 */ {

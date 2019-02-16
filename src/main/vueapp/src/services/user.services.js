@@ -1,7 +1,10 @@
+import {authHeader} from "../helpers";
+
 export const userService = {
     login,
     logout,
-    register
+    register,
+    getAll
 }
 
 function login(email, password) {
@@ -41,6 +44,19 @@ function register(name, email, password) {
 
 function logout() {
     localStorage.removeItem('user');
+}
+
+function getAll() {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader()
+    }
+
+    return fetch('/swimple/api/users', requestOptions)
+        .then(handleResponse)
+        .then(users => {
+            return users;
+        })
 }
 
 function handleResponse(response) {
