@@ -1,4 +1,5 @@
 import {groupService} from "../../services/group.services";
+import { router } from '../../router';
 
 const state = {
     all: [],
@@ -17,6 +18,16 @@ const actions = {
                 commit('GROUPS_FAILURE');
                 console.log(error);
             });
+    },
+
+    createGroup({ commit, dispatch }, group) {
+      groupService.create(group).then(group => {
+          commit('SELECT_GROUP', group);
+          dispatch('notices/addNotice', 'Succesfully created group!', { root: true});
+          router.push({ name: 'users#index' });
+      }).catch(error => {
+
+      });
     },
 
     select({ commit }, group) {

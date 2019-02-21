@@ -19,11 +19,9 @@ public class Training {
     private int id;
 
     @NotNull
-    @FutureOrPresent
     private Date startDate;
 
     @NotNull
-    @FutureOrPresent
     private Date endDate;
 
     @NotNull

@@ -1,6 +1,5 @@
 package services;
 
-import models.Training;
 import models.User;
 
 import javax.ejb.Stateless;

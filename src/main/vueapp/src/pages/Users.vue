@@ -41,7 +41,7 @@
 
 <style>
   .list-enter-active, .list-leave-active {
-    transition: all .3s;
+    transition: all .3s cubic-bezier(0.165, 0.84, 0.44, 1);
   }
   .list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
     opacity: 0;

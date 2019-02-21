@@ -1,9 +1,9 @@
 package models;
 
 import javax.json.bind.annotation.JsonbTransient;
-import javax.json.bind.annotation.JsonbVisibility;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,7 +18,10 @@ public class Group {
 
     @ManyToMany(mappedBy = "groups")
     @JsonbTransient
-    private List<User> users;
+    private List<User> users = new ArrayList<>();
+
+    public Group() {
+    }
 
     public int getId() {
         return id;
@@ -42,5 +45,6 @@ public class Group {
 
     public void addUser(User user) {
         users.add(user);
+        user.getGroups().add(this);
     }
 }

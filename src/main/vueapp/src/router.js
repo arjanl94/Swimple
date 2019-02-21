@@ -8,6 +8,7 @@ import TrainingsEdit from "./pages/TrainingsEdit";
 import TrainingsNew from "./pages/TrainingsNew";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import GroupsNew from "./pages/GroupsNew";
 
 Vue.use(Router);
 
@@ -52,7 +53,12 @@ export const router = new Router({
             path: '/trainings/:id/edit',
             name: 'trainings#edit',
             component: TrainingsEdit
-        }
+        },
+        {
+            path: '/groups/new',
+            name: 'groups#new',
+            component: GroupsNew
+        },
     ]
 });
 

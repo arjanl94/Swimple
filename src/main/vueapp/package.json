@@ -15,6 +15,7 @@
     "stylus-loader": "^3.0.2",
     "vue": "^2.5.22",
     "vue-click-outside": "^1.0.7",
+    "vue-fullcalendar": "^1.0.9",
     "vue-router": "^3.0.2",
     "vuejs-datepicker": "^1.5.4",
     "vuex": "^3.1.0"
