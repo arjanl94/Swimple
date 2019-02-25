@@ -8,6 +8,9 @@ import models.User;
 import services.UserService;
 
 import javax.inject.Inject;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -30,7 +33,8 @@ public class AuthenticationsController {
 
             return Response.ok(new AuthResponse(user, token)).build();
         } catch (Exception e) {
-            return Response.status(Response.Status.UNAUTHORIZED).build();
+            JsonObject errorObject = Json.createObjectBuilder().add("message", e.getLocalizedMessage()).build();
+            return Response.status(Response.Status.UNAUTHORIZED).entity(errorObject).build();
         }
     }
 

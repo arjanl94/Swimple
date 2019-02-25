@@ -1,6 +1,7 @@
 package models;
 
 import java.io.Serializable;
+import java.util.Set;
 
 public class AuthResponse implements Serializable {
 
@@ -8,11 +9,13 @@ public class AuthResponse implements Serializable {
     private String name;
     private String email;
     private String token;
+    private Set<Role> roles;
 
     public AuthResponse(User user, String token) {
         this.id = user.getId();
         this.name = user.getName();
         this.email = user.getEmail();
+        this.roles = user.getRoles();
         this.token = token;
     }
 
@@ -46,5 +49,9 @@ public class AuthResponse implements Serializable {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
     }
 }

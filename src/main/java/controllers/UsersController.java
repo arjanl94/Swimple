@@ -3,6 +3,7 @@ package controllers;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import filters.Authenticated;
+import filters.AuthenticatedUser;
 import models.AuthResponse;
 import models.User;
 import services.UserService;
@@ -21,10 +22,22 @@ public class UsersController {
     @Inject
     private UserService userService;
 
+    @Inject
+    @AuthenticatedUser
+    User authenticatedUser;
+
     @GET
     @Authenticated
     public Response index() {
        return Response.ok(userService.getAll()).build();
+    }
+
+    @GET
+    @Path("/me")
+    @Authenticated
+    public Response show() {
+        User user = authenticatedUser;
+        return Response.ok(user).build();
     }
 
     @POST

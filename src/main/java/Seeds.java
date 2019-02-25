@@ -1,7 +1,9 @@
 import models.Group;
+import models.Role;
 import models.Training;
 import models.User;
 import services.GroupService;
+import services.RoleService;
 import services.TrainingService;
 import services.UserService;
 
@@ -10,6 +12,7 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
 import java.util.Date;
+import java.util.HashSet;
 
 @Singleton
 @Startup
@@ -24,18 +27,30 @@ public class Seeds {
     @Inject
     TrainingService trainingService;
 
+    @Inject
+    RoleService roleService;
+
     @PostConstruct
     private void initialize() {
+        Role adminRole = new Role("ADMIN_ROLE");
+        Role coachRole = new Role("COACH_ROLE");
+
+        roleService.create(adminRole);
+        roleService.create(coachRole);
+
         User admin = new User();
         admin.setName("Tom Bakker");
         admin.setEmail("admin@swimple.nl");
         admin.setPassword("testpassword");
+        admin.setRole(adminRole);
+        admin.setRole(coachRole);
         userService.create(admin);
 
         User coach = new User();
         coach.setName("Bob de Coach");
         coach.setEmail("coach@swimple.nl");
         coach.setPassword("testpassword");
+        admin.setRole(coachRole);
         userService.create(coach);
 
         User swimmer = new User();

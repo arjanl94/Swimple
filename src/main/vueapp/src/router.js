@@ -9,6 +9,7 @@ import TrainingsNew from "./pages/TrainingsNew";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import GroupsNew from "./pages/GroupsNew";
+import {userHasRole, userIsAdmin} from "./helpers";
 
 Vue.use(Router);
 
@@ -42,7 +43,10 @@ export const router = new Router({
         {
             path: '/trainings/new',
             name: 'trainings#new',
-            component: TrainingsNew
+            component: TrainingsNew,
+            meta: {
+                admin: true
+            }
         },
         {
             path: '/trainings/:id',
@@ -65,10 +69,16 @@ export const router = new Router({
 router.beforeEach((to, from, next) => {
     const publicPages = ['/login', '/register'];
     const authRequired = !publicPages.includes(to.path);
-    const loggedIn = localStorage.getItem('user');
+    const loggedInUser = localStorage.getItem('user');
 
-    if(authRequired && !loggedIn) {
+    if(authRequired && !loggedInUser) {
         return next('/login');
+    }
+
+    if(to.matched.some(record => record.meta.admin)) {
+        if(!userIsAdmin(JSON.parse(loggedInUser))) {
+            return next('/');
+        }
     }
 
     next();

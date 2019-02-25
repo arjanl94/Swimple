@@ -61,7 +61,7 @@
           </svg>
           <span>Calendar</span>
         </router-link>
-        <router-link to="/users" class="nav-link">
+        <router-link v-if="canSeeUsers" to="/users" class="nav-link">
           <svg
             class="w-5 h-5 mr-2"
             xmlns="http://www.w3.org/2000/svg"
@@ -89,6 +89,7 @@
 <script>
     import {mapState} from "vuex";
     import CurrentUser from "./CurrentUser";
+    import {userIsAdmin} from "../helpers";
 
     export default {
   name: "navigation-bar",
@@ -96,7 +97,11 @@
     computed: {
       ...mapState({
         loggedIn: state => state.auth.status.loggedIn
-      })
+      }),
+
+        canSeeUsers() {
+          return userIsAdmin(this.$store.state.auth.user);
+        }
     }
 };
 </script>

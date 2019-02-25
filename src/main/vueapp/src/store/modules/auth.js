@@ -14,7 +14,7 @@ const actions = {
                 router.push('/');
             }).catch(error => {
               commit('LOGIN_FAILURE', error);
-              dispatch('notices/addNotice', "Login failed", { root: true });
+              dispatch('notices/addNotice', error, { root: true });
             });
     },
 

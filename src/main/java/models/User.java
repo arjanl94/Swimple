@@ -1,11 +1,15 @@
 package models;
 
+import org.hibernate.annotations.Fetch;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -33,6 +37,9 @@ public class User {
             inverseJoinColumns = { @JoinColumn(name = "group_id") }
     )
     private List<Group> groups = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "users", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    private Set<Role> roles = new HashSet<>();
 
 
     public User() {
@@ -78,5 +85,22 @@ public class User {
 
     public List<Group> getGroups() {
         return groups;
+    }
+
+    public void setGroups(List<Group> groups) {
+        this.groups = groups;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public void setRole(Role role) {
+        role.getUsers().add(this);
+        this.roles.add(role);
     }
 }

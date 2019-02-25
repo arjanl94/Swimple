@@ -8,6 +8,8 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 import javax.annotation.Priority;
+import javax.enterprise.event.Event;
+import javax.inject.Inject;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
@@ -24,6 +26,10 @@ public class AuthenticationFilter implements ContainerRequestFilter {
     private static final String REALM = "swimple";
     private static final String AUTHENTICATION_SCHEME = "Bearer";
 
+    @Inject
+    @AuthenticatedUser
+    Event<String> userAuthenticatedEvent;
+
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
         String authorizationHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
@@ -37,6 +43,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
         try {
             validateToken(token);
+            userAuthenticatedEvent.fire("admin@swimple.nl");
         } catch (Exception e) {
             abortWithUnauthorized(requestContext);
         }
