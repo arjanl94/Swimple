@@ -63,7 +63,7 @@ function create(data) {
         body: JSON.stringify(data)
     }
 
-    return fetch('swimple/api/trainings', requestOptions)
+    return fetch('/swimple/api/trainings', requestOptions)
         .then(handleResponse)
         .then(training => {
             return training;

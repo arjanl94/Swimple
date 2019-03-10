@@ -57,11 +57,11 @@ export default {
     }),
     startDate: function() {
       if (!this.training) return;
-      return moment(this.training.startDate.replace("[UTC]", ""));
+      return moment(this.training.startDate);
     },
     endDate: function() {
       if (!this.training) return;
-      return moment(this.training.endDate.replace("[UTC]", ""));
+      return moment(this.training.endDate);
     },
     markdown() {
       if (!this.training.workout) return;

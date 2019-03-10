@@ -31,8 +31,8 @@
                 return this.$store.state.trainings.all.map(training => {
                     return {
                         title: training.description,
-                        start: training.startDate.replace('[UTC]', ''),
-                        end: training.endDate.replace('[UTC]', ''),
+                        start: training.startDate,
+                        end: training.endDate,
                         id: training.id
                     };
                 });

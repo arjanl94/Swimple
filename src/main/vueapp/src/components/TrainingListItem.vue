@@ -26,17 +26,12 @@
         computed: {
             startDate: function() {
                 if (!this.training) return;
-                return moment(this.training.startDate.replace('[UTC]', ''));
+                return moment(this.training.startDate);
             },
             endDate: function() {
                 if (!this.training) return;
-                return moment(this.training.endDate.replace('[UTC]', ''));
+                return moment(this.training.endDate);
             }
         },
-        filters: {
-            moment: function(date) {
-                return moment(date).format("MMMM Do YYYY, h:mm:ss a")
-            }
-        }
     }
 </script>

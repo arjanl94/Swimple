@@ -1,4 +1,4 @@
-<template>
+p<template>
   <div v-if="training" class="max-w-lg mx-auto bg-white rounded border border-grey-lighter">
     <form action="#">
       <div class="p-6">
