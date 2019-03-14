@@ -51,7 +51,7 @@ public class Seeds {
         coach.setName("Bob de Coach");
         coach.setEmail("coach@swimple.nl");
         coach.setPassword("testpassword");
-        admin.setRole(coachRole);
+        coach.setRole(coachRole);
         userService.create(coach);
 
         User swimmer = new User();
