@@ -7,16 +7,26 @@
       xmlns:p="http://primefaces.org/ui">
 <h:head>
     <title>Swimple Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet" />
 </h:head>
-<h:body>
-    <div>
-        <div class="bg-blue ">
+<h:body styleClass="bg-grey-lightest">
+    <div class="bg-white py-2 border-grey-light mb-4">
+        <div class="container mx-auto px-2">
             <h1>Swimple Admin</h1>
         </div>
-        <p:menu>
-            <p:menuitem value="Users" outcome="/admin/index" />
-        </p:menu>
-        <ui:insert name="content" />
+    </div>
+    <div class="container mx-auto px-2">
+        <div class="flex -mx-2">
+            <div class="w-1/5 px-2">
+                <p:menu>
+                    <p:menuitem value="Users" outcome="/admin/index" />
+                    <p:menuitem value="Teams" outcome="/admin/teams" />
+                </p:menu>
+            </div>
+            <div class="w-4/5 px-2">
+                <ui:insert name="content" />
+            </div>
+        </div>
     </div>
 </h:body>
 </html>
