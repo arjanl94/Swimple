@@ -5,6 +5,7 @@ import notices  from './modules/notices';
 import auth from "./modules/auth";
 import users from "./modules/users";
 import groups from "./modules/groups";
+import comments from "./modules/comments";
 
 Vue.use(Vuex);
 
@@ -14,7 +15,8 @@ export default new Vuex.Store({
         notices,
         auth,
         users,
-        groups
+        groups,
+        comments
     },
     strict: true
 });

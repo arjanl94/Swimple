@@ -1,12 +1,15 @@
 package swimple.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.json.bind.annotation.JsonbNillable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "trainings")
@@ -31,6 +34,9 @@ public class Training {
 
     @Column(columnDefinition="TEXT")
     private String workout;
+
+    @OneToMany(targetEntity = Comment.class, fetch = FetchType.LAZY, mappedBy = "training")
+    private List<Comment> comments = new ArrayList<>();
 
     @CreationTimestamp
     private Date createdAt;
@@ -87,6 +93,11 @@ public class Training {
 
     public void setWorkout(String workout) {
         this.workout = workout;
+    }
+
+    @JsonIgnore
+    public List<Comment> getComments() {
+        return comments;
     }
 
     public Date getCreatedAt() {

@@ -1,11 +1,9 @@
 package swimple.controllers;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import swimple.annotation.PropertiesFromFile;
 import swimple.models.AuthResponse;
 import swimple.models.Credentials;
 import swimple.models.User;
+import swimple.services.JwtService;
 import swimple.services.UserService;
 
 import javax.inject.Inject;
@@ -16,7 +14,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
-import java.util.Properties;
 
 @Path("/authentication")
 @Produces("application/json")
@@ -26,16 +23,15 @@ public class AuthenticationsController {
     @Inject
     UserService userService;
 
-    @Inject
-    @PropertiesFromFile
-    Properties props;
 
+    @Inject
+    JwtService jwt;
 
     @POST
     public Response login(Credentials credentials) {
         try {
             User user = authenticate(credentials);
-            String token = issueToken(credentials.getEmail());
+            String token = jwt.issueToken(credentials.getEmail());
 
             return Response.ok(new AuthResponse(user, token)).build();
         } catch (Exception e) {
@@ -56,10 +52,5 @@ public class AuthenticationsController {
         }
 
         return user;
-    }
-
-    private String issueToken(String email) {
-        Algorithm algorithm = Algorithm.HMAC256(props.getProperty("secret_key"));
-        return JWT.create().withIssuer(email).sign(algorithm);
     }
 }

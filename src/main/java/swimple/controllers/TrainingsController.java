@@ -1,10 +1,16 @@
 package swimple.controllers;
 
 import swimple.filters.Authenticated;
+import swimple.filters.AuthenticatedUser;
+import swimple.models.Comment;
 import swimple.models.Training;
+import swimple.models.User;
+import swimple.services.CommentService;
 import swimple.services.TrainingService;
+import swimple.services.UserService;
 
 import javax.inject.Inject;
+import javax.json.JsonObject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -17,10 +23,19 @@ public class TrainingsController {
     @Inject
     private TrainingService trainingService;
 
+    @Inject
+    private CommentService commentService;
+
+    @Inject
+    private UserService userService;
+
+    @Inject
+    @AuthenticatedUser
+    User currentUser;
+
     @GET
     public Response index() {
         return Response.ok(trainingService.getAll()).build();
-//        return Response.ok(trainingService.getAll()).build();
     }
 
     @POST
@@ -32,6 +47,27 @@ public class TrainingsController {
     @Path("{id}")
     public Response show(@PathParam("id") String id) {
         return Response.ok(trainingService.get(id)).build();
+    }
+
+    @GET
+    @Path("{training_id}/comments")
+    public Response showComments(@PathParam("training_id") int id) {
+        return Response.ok(commentService.getForTraining(id)).build();
+    }
+
+    @POST
+    @Path("{training_id}/comments")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createComment(@PathParam("training_id") int id, JsonObject params) {
+        Training training = trainingService.get("" + id);
+
+        Comment comment = new Comment();
+        comment.setTraining(training);
+        comment.setUser(userService.findByEmail(currentUser.getEmail()));
+        comment.setBody(params.getString("body"));
+
+
+        return Response.ok(commentService.create(comment)).build();
     }
 
 

@@ -1,5 +1,8 @@
 package swimple.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -26,6 +29,7 @@ public class User {
     private String email;
 
     @NotNull
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
@@ -39,6 +43,8 @@ public class User {
     @ManyToMany(mappedBy = "users", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Set<Role> roles = new HashSet<>();
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Comment> comments = new ArrayList<>();
 
     public User() {
     }
@@ -100,5 +106,15 @@ public class User {
     public void setRole(Role role) {
         role.getUsers().add(this);
         this.roles.add(role);
+    }
+
+    @JsonIgnore
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    @JsonIgnore
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }

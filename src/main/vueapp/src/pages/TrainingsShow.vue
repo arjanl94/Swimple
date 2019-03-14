@@ -19,27 +19,27 @@
       </div>
     </div>
     <div class="w-full md:w-1/4 px-4">
-      <h2 class="text-xl mb-4">Comments</h2>
-      <div class="flex flex-col justify-center items-center py-32">
-        <svg
-          class="w-16 h-16 stroke-current text-grey-light mb-4"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <circle cx="12" cy="12" r="10"></circle>
-          <path d="M16 16s-1.5-2-4-2-4 2-4 2"></path>
-          <line x1="9" y1="9" x2="9.01" y2="9"></line>
-          <line x1="15" y1="9" x2="15.01" y2="9"></line>
-        </svg>
-        <p class="text-grey text-center">There are no comments yet...</p>
-      </div>
+      <comment-list :training="training"></comment-list>
+      <!--<div class="flex flex-col justify-center items-center py-32">-->
+        <!--<svg-->
+          <!--class="w-16 h-16 stroke-current text-grey-light mb-4"-->
+          <!--xmlns="http://www.w3.org/2000/svg"-->
+          <!--width="24"-->
+          <!--height="24"-->
+          <!--viewBox="0 0 24 24"-->
+          <!--fill="none"-->
+          <!--stroke="currentColor"-->
+          <!--stroke-width="2"-->
+          <!--stroke-linecap="round"-->
+          <!--stroke-linejoin="round"-->
+        <!--&gt;-->
+          <!--<circle cx="12" cy="12" r="10"></circle>-->
+          <!--<path d="M16 16s-1.5-2-4-2-4 2-4 2"></path>-->
+          <!--<line x1="9" y1="9" x2="9.01" y2="9"></line>-->
+          <!--<line x1="15" y1="9" x2="15.01" y2="9"></line>-->
+        <!--</svg>-->
+        <!--<p class="text-grey text-center">There are no comments yet...</p>-->
+      <!--</div>-->
     </div>
   </div>
 </template>
@@ -48,6 +48,7 @@
 import { mapState } from "vuex";
 import moment from "moment";
 import marked from "marked";
+import CommentList from "../components/CommentList";
 
 export default {
   name: "trainings-show",
@@ -70,7 +71,10 @@ export default {
   },
   created() {
     this.$store.dispatch("trainings/getTraining", this.$route.params.id);
-  }
+  },
+    components: {
+      CommentList
+    }
 };
 </script>
 

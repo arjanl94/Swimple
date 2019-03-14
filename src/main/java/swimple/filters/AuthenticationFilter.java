@@ -2,6 +2,7 @@ package swimple.filters;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.exceptions.JWTDecodeException;
+import swimple.services.JwtService;
 
 import javax.annotation.Priority;
 import javax.enterprise.event.Event;
@@ -26,6 +27,9 @@ public class AuthenticationFilter implements ContainerRequestFilter {
     @AuthenticatedUser
     Event<String> userAuthenticatedEvent;
 
+    @Inject
+    JwtService jwt;
+
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
         String authorizationHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
@@ -38,8 +42,8 @@ public class AuthenticationFilter implements ContainerRequestFilter {
         String token = authorizationHeader.substring(AUTHENTICATION_SCHEME.length()).trim();
 
         try {
-            validateToken(token);
-            userAuthenticatedEvent.fire("admin@swimple.swimple.nl");
+            String email = validateToken(token);
+            userAuthenticatedEvent.fire(email);
         } catch (Exception e) {
             abortWithUnauthorized(requestContext);
         }
@@ -58,11 +62,13 @@ public class AuthenticationFilter implements ContainerRequestFilter {
                         .build());
     }
 
-    private void validateToken(String token) throws Exception {
-        try {
-            JWT.decode(token);
-        } catch (JWTDecodeException exception) {
-           throw new Exception("JWT couldn't be decoded");
+    private String validateToken(String token) throws Exception {
+        String email =  jwt.validateToken(token);
+
+        if (email == null) {
+            throw new Exception("Couldn't validate JWT");
         }
+
+        return email;
     }
 }
