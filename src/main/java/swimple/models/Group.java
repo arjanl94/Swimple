@@ -10,11 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "groups")
-public class Group {
-    @Id
-    @GeneratedValue
-    private int id;
-
+public class Group extends ApplicationRecord {
     @NotBlank
     private String name;
 
@@ -23,14 +19,6 @@ public class Group {
     private List<User> users = new ArrayList<>();
 
     public Group() {
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public void setName(String name) {

@@ -45,7 +45,7 @@ public class TrainingsController {
 
     @GET
     @Path("{id}")
-    public Response show(@PathParam("id") String id) {
+    public Response show(@PathParam("id") int id) {
         return Response.ok(trainingService.get(id)).build();
     }
 
@@ -59,7 +59,7 @@ public class TrainingsController {
     @Path("{training_id}/comments")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createComment(@PathParam("training_id") int id, JsonObject params) {
-        Training training = trainingService.get("" + id);
+        Training training = trainingService.get(id);
 
         Comment comment = new Comment();
         comment.setTraining(training);

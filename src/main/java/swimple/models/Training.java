@@ -14,13 +14,7 @@ import java.util.List;
 @Entity
 @Table(name = "trainings")
 @JsonbNillable
-public class Training {
-
-    @Id
-    @GeneratedValue
-    private int id;
-
-    @NotNull
+public class Training extends ApplicationRecord {
     private Date startDate;
 
     @NotNull
@@ -38,21 +32,8 @@ public class Training {
     @OneToMany(targetEntity = Comment.class, fetch = FetchType.LAZY, mappedBy = "training")
     private List<Comment> comments = new ArrayList<>();
 
-    @CreationTimestamp
-    private Date createdAt;
-
-    @UpdateTimestamp
-    private Date updatedAt;
 
     public Training() {
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public Date getStartDate() {
@@ -98,13 +79,5 @@ public class Training {
     @JsonIgnore
     public List<Comment> getComments() {
         return comments;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
     }
 }

@@ -5,11 +5,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "comments")
-public class Comment {
-
-    @Id
-    @GeneratedValue
-    private int id;
+public class Comment extends ApplicationRecord {
 
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = User.class)
     @JoinColumn(name = "user_id", nullable = false)
@@ -20,14 +16,6 @@ public class Comment {
     private Training training;
 
     private String body;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public User getUser() {
         return user;

@@ -1,28 +1,25 @@
 package swimple.services;
 
+import swimple.dao.UserRepository;
 import swimple.models.User;
 
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.inject.Inject;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
 
 @Stateless
 public class UserService {
 
-    @PersistenceContext
-    EntityManager em;
+    @Inject
+    UserRepository userRepository;
 
     public List<User> getAll() {
-        Query query = em.createQuery("select u from User u", User.class);
-
-        return query.getResultList();
+        return userRepository.findAll();
     }
 
     public User create(User user) {
@@ -32,20 +29,13 @@ public class UserService {
             e.printStackTrace();
         }
 
-        em.persist(user);
-
+        userRepository.save(user);
         return user;
     }
 
     public User findByEmail(String email) {
-        Query query = em.createQuery("select u from User u where u.email = :email", User.class);
-        query.setParameter("email", email);
-
-        try {
-            return (User) query.getSingleResult();
-        } catch (NoResultException e) {
-            return null;
-        }
+        Optional<User> result = userRepository.findByEmail(email);
+        return result.orElse(null);
     }
 
     public static String encodeSHA256(String password) throws NoSuchAlgorithmException {

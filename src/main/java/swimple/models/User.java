@@ -14,11 +14,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User {
-
-    @Id
-    @GeneratedValue
-    private int id;
+public class User extends ApplicationRecord {
 
     @NotBlank
     private String name;
@@ -53,14 +49,6 @@ public class User {
         this.name = name;
         this.email = email;
         this.password = password;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
