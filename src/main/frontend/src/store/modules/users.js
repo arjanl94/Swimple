@@ -12,9 +12,8 @@ const actions = {
         userService.getAll()
             .then(users => {
                 commit('USERS_SUCCESS', users);
-            }).catch(error => {
+            }).catch(() => {
                commit('USERS_FAILURE');
-               console.log(error);
             });
     }
 }

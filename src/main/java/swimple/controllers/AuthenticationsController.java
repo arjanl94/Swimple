@@ -2,6 +2,7 @@ package swimple.controllers;
 
 import swimple.models.AuthResponse;
 import swimple.models.Credentials;
+import swimple.models.OAuthCredentials;
 import swimple.models.User;
 import swimple.services.JwtService;
 import swimple.services.UserService;
@@ -26,6 +27,32 @@ public class AuthenticationsController {
 
     @Inject
     JwtService jwt;
+
+    @POST
+    @Path("/oauth")
+    public Response signInWithGoogle(OAuthCredentials credentials) {
+        User user = userService.findByEmail(credentials.getEmail());
+
+        if (user == null) {
+            User newUser = new User();
+            newUser.setEmail(credentials.getEmail());
+            newUser.setName(credentials.getName());
+            newUser.setOAuthToken(credentials.getToken());
+
+            userService.createFromOAuth(newUser);
+
+            String token = jwt.issueToken(newUser.getEmail());
+            return Response.ok(new AuthResponse(newUser, token)).build();
+        }
+
+        if (!credentials.getToken().equals(user.getOAuthToken())) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+
+        String token = jwt.issueToken(credentials.getEmail());
+
+        return Response.ok(new AuthResponse(user, token)).build();
+    }
 
     @POST
     public Response login(Credentials credentials) {

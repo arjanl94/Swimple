@@ -19,10 +19,6 @@ public abstract class CrudRepository<T extends ApplicationRecord> {
         this.entityClass = entityClass;
     }
 
-    public CrudRepository() {
-        this.entityClass = (Class<T>) this.getClass().getComponentType();
-    }
-
     public List<T> findAll() {
         return em.createQuery("from " + entityClass.getName(), entityClass).getResultList();
     }
@@ -30,7 +26,6 @@ public abstract class CrudRepository<T extends ApplicationRecord> {
     public Optional<T> findById(int id) {
         return Optional.of(em.find(entityClass, id));
     }
-
 
     public void save(T entity) {
         if(entity.isNew()) {

@@ -33,6 +33,11 @@ public class UserService {
         return user;
     }
 
+    public User createFromOAuth(User user) {
+        userRepository.save(user);
+        return user;
+    }
+
     public User findByEmail(String email) {
         Optional<User> result = userRepository.findByEmail(email);
         return result.orElse(null);

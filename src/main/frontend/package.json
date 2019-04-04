@@ -10,6 +10,7 @@
   "dependencies": {
     "autosize": "^4.0.2",
     "copy-webpack-plugin": "^5.0.1",
+    "firebase": "^5.9.2",
     "marked": "^0.6.0",
     "moment": "^2.24.0",
     "stylus": "^0.54.5",

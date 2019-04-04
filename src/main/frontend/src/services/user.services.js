@@ -2,6 +2,7 @@ import {authHeader} from "../helpers";
 
 export const userService = {
     login,
+    loginWithGoogle,
     logout,
     register,
     getAll
@@ -15,6 +16,24 @@ function login(email, password) {
     };
 
     return fetch('/swimple/api/authentication', requestOptions)
+        .then(handleResponse)
+        .then(user => {
+            if (user.token) {
+                localStorage.setItem('user', JSON.stringify(user));
+            }
+
+            return user;
+        });
+}
+
+function loginWithGoogle(email, name, token) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, name, token })
+    }
+
+    return fetch('/swimple/api/authentication/oauth', requestOptions)
         .then(handleResponse)
         .then(user => {
             if (user.token) {

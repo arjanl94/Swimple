@@ -1,19 +1,19 @@
 package swimple.services;
 
+import swimple.dao.TeamRepository;
 import swimple.models.Team;
 
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.inject.Inject;
 import java.util.List;
 
 @Stateless
 public class TeamService {
 
-    @PersistenceContext
-    EntityManager em;
+    @Inject
+    TeamRepository teamRepository;
 
     public List<Team> getAll() {
-        return em.createQuery("select t from Team t", Team.class).getResultList();
+        return teamRepository.findAll();
     }
 }

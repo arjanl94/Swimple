@@ -24,9 +24,14 @@ public class User extends ApplicationRecord {
     @Email
     private String email;
 
-    @NotNull
+//    @NotNull
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Column(columnDefinition="TEXT")
+    private String oauthToken;
 
     @ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
     @JoinTable(
@@ -104,6 +109,14 @@ public class User extends ApplicationRecord {
     @JsonIgnore
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public String getOAuthToken() {
+        return oauthToken;
+    }
+
+    public void setOAuthToken(String oauthToken) {
+        this.oauthToken = oauthToken;
     }
 
 }
