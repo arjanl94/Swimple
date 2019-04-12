@@ -24,7 +24,6 @@ public class GroupsController {
     @POST
     @Consumes("application/json")
     public Response create(JsonObject object) {
-//        return Response.noContent().build();
         return Response.ok(groupService.create(object)).build();
     }
 }

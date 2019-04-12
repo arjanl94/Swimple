@@ -1,21 +1,19 @@
 package swimple.services;
 
-import swimple.dao.GroupRepository;
-import swimple.dao.UserRepository;
-import swimple.models.Group;
-import swimple.models.User;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonValue;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+
+import swimple.dao.GroupRepository;
+import swimple.dao.UserRepository;
+import swimple.models.Group;
+import swimple.models.User;
 
 @Stateless
 public class GroupService {
