@@ -3,9 +3,11 @@ package swimple.dao;
 import swimple.models.Comment;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.Stateless;
 import javax.persistence.Query;
 import java.util.List;
 
+@Stateless
 public class CommentRepository extends CrudRepository<Comment> {
 
     @PostConstruct

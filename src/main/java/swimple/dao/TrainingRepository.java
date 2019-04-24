@@ -4,6 +4,7 @@ import swimple.models.Training;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
 
 @Stateless
 public class TrainingRepository extends CrudRepository<Training> {

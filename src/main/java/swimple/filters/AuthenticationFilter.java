@@ -2,9 +2,12 @@ package swimple.filters;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.exceptions.JWTDecodeException;
+import swimple.models.User;
 import swimple.services.JwtService;
+import swimple.services.UserService;
 
 import javax.annotation.Priority;
+import javax.enterprise.context.Dependent;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.ws.rs.Priorities;
@@ -12,11 +15,13 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.ext.Provider;
 import java.io.IOException;
+import java.nio.file.AccessDeniedException;
 
-@Authenticated
 @Provider
+@Dependent
 @Priority(Priorities.AUTHENTICATION)
 public class AuthenticationFilter implements ContainerRequestFilter {
 
@@ -24,28 +29,32 @@ public class AuthenticationFilter implements ContainerRequestFilter {
     private static final String AUTHENTICATION_SCHEME = "Bearer";
 
     @Inject
-    @AuthenticatedUser
-    Event<String> userAuthenticatedEvent;
+    JwtService jwt;
 
     @Inject
-    JwtService jwt;
+    UserService userService;
 
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
         String authorizationHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
 
         if(!isTokenBasedAuthentication(authorizationHeader)) {
-            abortWithUnauthorized(requestContext);
-            return;
+            throw new AccessDeniedException("Access denied");
         }
 
         String token = authorizationHeader.substring(AUTHENTICATION_SCHEME.length()).trim();
 
         try {
             String email = validateToken(token);
-            userAuthenticatedEvent.fire(email);
+            User user = userService.findByEmail(email);
+            AuthenticatedUserDetails userDetails = new AuthenticatedUserDetails(user, user.getRoles());
+
+            boolean isSecure = requestContext.getSecurityContext().isSecure();
+            SecurityContext securityContext = new TokenBasedSecurityContext(userDetails, isSecure);
+            requestContext.setSecurityContext(securityContext);
+//            userAuthenticatedEvent.fire(email);
         } catch (Exception e) {
-            abortWithUnauthorized(requestContext);
+            throw new AccessDeniedException("Your not allowed");
         }
     }
 

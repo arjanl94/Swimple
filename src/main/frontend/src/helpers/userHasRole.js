@@ -2,7 +2,7 @@ export function userHasRole(user, roleName) {
     if(user.roles.isEmpty) return false;
 
     const role = user.roles.find(role => {
-        return role.name == roleName;
+        return role == roleName;
     });
 
     if(!role) return false;
@@ -11,5 +11,5 @@ export function userHasRole(user, roleName) {
 }
 
 export function userIsAdmin(user) {
-    return userHasRole(user, 'ADMIN_ROLE');
+    return userHasRole(user, 'admin');
 }

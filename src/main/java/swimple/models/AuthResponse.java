@@ -9,7 +9,7 @@ public class AuthResponse implements Serializable {
     private String name;
     private String email;
     private String token;
-    private Set<Role> roles;
+    private String[] roles;
 
     public AuthResponse(User user, String token) {
         this.id = user.getId();
@@ -51,7 +51,7 @@ public class AuthResponse implements Serializable {
         this.token = token;
     }
 
-    public Set<Role> getRoles() {
+    public String[] getRoles() {
         return roles;
     }
 }

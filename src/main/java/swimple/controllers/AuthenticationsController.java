@@ -7,6 +7,7 @@ import swimple.models.User;
 import swimple.services.JwtService;
 import swimple.services.UserService;
 
+import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -41,7 +42,7 @@ public class AuthenticationsController {
 
             userService.createFromOAuth(newUser);
 
-            String token = jwt.issueToken(newUser.getEmail());
+            String token = jwt.issueToken(newUser);
             return Response.ok(new AuthResponse(newUser, token)).build();
         }
 
@@ -49,16 +50,17 @@ public class AuthenticationsController {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
 
-        String token = jwt.issueToken(credentials.getEmail());
+        String token = jwt.issueToken(user);
 
         return Response.ok(new AuthResponse(user, token)).build();
     }
 
     @POST
+    @PermitAll
     public Response login(Credentials credentials) {
         try {
             User user = authenticate(credentials);
-            String token = jwt.issueToken(credentials.getEmail());
+            String token = jwt.issueToken(user);
 
             return Response.ok(new AuthResponse(user, token)).build();
         } catch (Exception e) {

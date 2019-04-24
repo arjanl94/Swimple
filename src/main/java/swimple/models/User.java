@@ -8,9 +8,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -41,8 +39,13 @@ public class User extends ApplicationRecord {
     )
     private List<Group> groups = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "users", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    private Set<Role> roles = new HashSet<>();
+//    @ManyToMany(mappedBy = "users", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+//    private Set<Role> roles = new HashSet<>();
+//    @Column(name = "is_admin")
+    private boolean isAdmin;
+
+//    @Column(name = "is_coach")
+    private boolean isCoach;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Comment> comments = new ArrayList<>();
@@ -88,17 +91,49 @@ public class User extends ApplicationRecord {
         this.groups = groups;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+//    public Set<Role> getRoles() {
+//        return roles;
+//   ƒ }
+//
+//    public void setRoles(Set<Role> roles) {
+//        this.roles = roles;
+//    }
+//
+//    public void setRole(Role role) {
+//        role.getUsers().add(this);
+//        this.roles.add(role);
+//    }
+
+
+    public boolean isAdmin() {
+        return isAdmin;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 
-    public void setRole(Role role) {
-        role.getUsers().add(this);
-        this.roles.add(role);
+    public boolean isCoach() {
+        return isCoach;
+    }
+
+    public void setCoach(boolean coach) {
+        isCoach = coach;
+    }
+
+    public String[] getRoles() {
+        List<String> roles = new ArrayList<>();
+        roles.add("user");
+
+        if(isAdmin()) {
+            roles.add("admin");
+        }
+
+        if(isCoach()) {
+            roles.add("coach");
+        }
+
+        return roles.toArray(new String[0]);
     }
 
     @JsonIgnore

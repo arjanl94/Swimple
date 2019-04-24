@@ -1,11 +1,9 @@
 package swimple;
 
 import swimple.models.Group;
-import swimple.models.Role;
 import swimple.models.Training;
 import swimple.models.User;
 import swimple.services.GroupService;
-import swimple.services.RoleService;
 import swimple.services.TrainingService;
 import swimple.services.UserService;
 
@@ -28,30 +26,21 @@ public class Seeds {
     @Inject
     TrainingService trainingService;
 
-    @Inject
-    RoleService roleService;
-
     @PostConstruct
     private void initialize() {
-        Role adminRole = new Role("ADMIN_ROLE");
-        Role coachRole = new Role("COACH_ROLE");
-
-        roleService.create(adminRole);
-        roleService.create(coachRole);
-
         User admin = new User();
         admin.setName("Tom Bakker");
         admin.setEmail("admin@swimple.nl");
         admin.setPassword("testpassword");
-        admin.setRole(adminRole);
-        admin.setRole(coachRole);
+        admin.setAdmin(true);
+        admin.setCoach(true);
         userService.create(admin);
 
         User coach = new User();
         coach.setName("Bob de Coach");
         coach.setEmail("coach@swimple.nl");
         coach.setPassword("testpassword");
-        coach.setRole(coachRole);
+        coach.setCoach(true);
         userService.create(coach);
 
         User swimmer = new User();

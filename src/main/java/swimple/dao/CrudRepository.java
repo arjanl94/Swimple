@@ -7,7 +7,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
 
-@SuppressWarnings("unchecked")
+
 public abstract class CrudRepository<T extends ApplicationRecord> {
 
     @PersistenceContext
