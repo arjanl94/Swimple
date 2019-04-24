@@ -1,0 +1,13 @@
+version: '3'
+services:
+  db:
+    image: postgres:11.2
+    environment:
+      POSTGRES_PASSWORD: adminadmin
+      POSTGRES_DB: swimple_db
+  swimple:
+    image: swimple
+    ports:
+      - "8080:8080"
+      - "8181:8181"
+      - "4848:4848"
