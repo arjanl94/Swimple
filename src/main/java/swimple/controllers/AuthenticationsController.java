@@ -20,6 +20,7 @@ import javax.ws.rs.core.Response;
 @Path("/authentication")
 @Produces("application/json")
 @Consumes("application/json")
+@PermitAll
 public class AuthenticationsController {
 
     @Inject
@@ -56,7 +57,6 @@ public class AuthenticationsController {
     }
 
     @POST
-    @PermitAll
     public Response login(Credentials credentials) {
         try {
             User user = authenticate(credentials);

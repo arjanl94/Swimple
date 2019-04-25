@@ -1,7 +1,5 @@
 package swimple.controllers;
 
-import swimple.filters.Authenticated;
-import swimple.filters.AuthenticatedUser;
 import swimple.models.Comment;
 import swimple.models.Training;
 import swimple.models.User;
@@ -9,6 +7,8 @@ import swimple.services.CommentService;
 import swimple.services.TrainingService;
 import swimple.services.UserService;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.json.JsonObject;
 import javax.ws.rs.*;
@@ -17,7 +17,6 @@ import javax.ws.rs.core.Response;
 
 @Path("/trainings")
 @Produces("application/json")
-@Authenticated
 public class TrainingsController {
 
     @Inject
@@ -30,27 +29,30 @@ public class TrainingsController {
     private UserService userService;
 
     @Inject
-    @AuthenticatedUser
     User currentUser;
 
     @GET
+    @RolesAllowed({"user", "coach", "admin"})
     public Response index() {
         return Response.ok(trainingService.getAll()).build();
     }
 
     @POST
+    @RolesAllowed({"coach", "admin"})
     public Response create(Training training) {
         return Response.ok(trainingService.create(training)).build();
     }
 
     @GET
     @Path("{id}")
+    @RolesAllowed({"user", "coach", "admin"})
     public Response show(@PathParam("id") int id) {
         return Response.ok(trainingService.get(id)).build();
     }
 
     @GET
     @Path("{training_id}/comments")
+    @RolesAllowed({"user", "coach", "admin"})
     public Response showComments(@PathParam("training_id") int id) {
         return Response.ok(commentService.getForTraining(id)).build();
     }
@@ -58,6 +60,7 @@ public class TrainingsController {
     @POST
     @Path("{training_id}/comments")
     @Consumes(MediaType.APPLICATION_JSON)
+    @RolesAllowed({"user", "coach", "admin"})
     public Response createComment(@PathParam("training_id") int id, JsonObject params) {
         Training training = trainingService.get(id);
 
@@ -74,6 +77,7 @@ public class TrainingsController {
     @PUT
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
+    @RolesAllowed({"coach", "admin"})
     public Response update(@PathParam("id") String id, Training training) {
         training.setId(Integer.parseInt(id));
         return Response.ok(trainingService.update(training)).build();

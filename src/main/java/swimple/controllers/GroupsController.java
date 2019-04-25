@@ -1,8 +1,8 @@
 package swimple.controllers;
 
-import swimple.filters.Authenticated;
 import swimple.services.GroupService;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.json.JsonObject;
 import javax.ws.rs.*;
@@ -10,7 +10,7 @@ import javax.ws.rs.core.Response;
 
 @Path("/groups")
 @Produces("application/json")
-@Authenticated
+@RolesAllowed({ "admin", "coach" })
 public class GroupsController {
 
     @Inject

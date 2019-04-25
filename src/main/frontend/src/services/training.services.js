@@ -77,7 +77,7 @@ function handleResponse(response) {
 
     if(!response.ok) {
         if(response.status === 401) {
-            userService.logout();
+            // userService.logout();
         }
 
         const error = (data && data.message) || response.statusText;

@@ -3,6 +3,7 @@ package swimple.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -137,6 +138,7 @@ public class User extends ApplicationRecord {
     }
 
     @JsonIgnore
+    @JsonbTransient
     public List<Comment> getComments() {
         return comments;
     }

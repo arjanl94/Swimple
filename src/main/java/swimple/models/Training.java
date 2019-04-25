@@ -5,6 +5,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.json.bind.annotation.JsonbNillable;
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class Training extends ApplicationRecord {
     @Column(columnDefinition="TEXT")
     private String workout;
 
+    @JsonbTransient
     @OneToMany(targetEntity = Comment.class, fetch = FetchType.LAZY, mappedBy = "training")
     private List<Comment> comments = new ArrayList<>();
 

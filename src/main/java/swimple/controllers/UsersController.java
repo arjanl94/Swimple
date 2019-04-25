@@ -1,12 +1,11 @@
 package swimple.controllers;
 
-import swimple.filters.Authenticated;
-import swimple.filters.AuthenticatedUser;
 import swimple.models.AuthResponse;
 import swimple.models.User;
 import swimple.services.JwtService;
 import swimple.services.UserService;
 
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -31,20 +30,19 @@ public class UsersController {
     SecurityContext context;
 
     @GET
-    @Authenticated
-    @RolesAllowed({"admin"})
+    @RolesAllowed({"admin", "coach"})
     public Response index() {
        return Response.ok(userService.getAll()).build();
     }
 
     @GET
     @Path("/me")
-    @Authenticated
     public Response show() {
         return Response.ok(context.getUserPrincipal().getName()).build();
     }
 
     @POST
+    @PermitAll
     public Response create(User user) {
         User savedUser = userService.create(user);
 
