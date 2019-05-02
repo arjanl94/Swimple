@@ -14,12 +14,16 @@ public class AuthenticatedUserDetails implements Principal {
         this.roles = roles;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     public String[] getRoles() {
         return roles;
     }
 
     @Override
     public String getName() {
-        return user.getName();
+        return user.getEmail();
     }
 }

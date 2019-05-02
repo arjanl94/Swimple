@@ -2,6 +2,7 @@ package swimple.controllers;
 
 import swimple.filters.Authenticated;
 import swimple.filters.AuthenticatedUser;
+import swimple.filters.AuthenticatedUserDetails;
 import swimple.models.Comment;
 import swimple.models.Training;
 import swimple.models.User;
@@ -12,8 +13,11 @@ import swimple.services.UserService;
 import javax.inject.Inject;
 import javax.json.JsonObject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
+import java.security.Principal;
 
 @Path("/trainings")
 @Produces("application/json")
@@ -29,9 +33,8 @@ public class TrainingsController {
     @Inject
     private UserService userService;
 
-    @Inject
-    @AuthenticatedUser
-    User currentUser;
+    @Context
+    SecurityContext context;
 
     @GET
     public Response index() {
@@ -60,10 +63,13 @@ public class TrainingsController {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createComment(@PathParam("training_id") int id, JsonObject params) {
         Training training = trainingService.get(id);
+        Principal userPrincipal = context.getUserPrincipal();
+        String userName = userPrincipal.getName();
+        User user = userService.findByEmail(userName);
 
         Comment comment = new Comment();
         comment.setTraining(training);
-        comment.setUser(userService.findByEmail(currentUser.getEmail()));
+        comment.setUser(user);
         comment.setBody(params.getString("body"));
 
 

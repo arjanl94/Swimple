@@ -77,7 +77,7 @@ public class Training extends ApplicationRecord {
         this.workout = workout;
     }
 
-    @JsonbTransient
+    @JsonIgnore
     public List<Comment> getComments() {
         return comments;
     }

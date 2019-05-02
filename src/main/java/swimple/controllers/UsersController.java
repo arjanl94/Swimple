@@ -32,7 +32,7 @@ public class UsersController {
 
     @GET
     @Authenticated
-    @RolesAllowed({"admin"})
+//    @RolesAllowed({"admin"})
     public Response index() {
        return Response.ok(userService.getAll()).build();
     }

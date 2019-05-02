@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 
 @Authenticated
-@Dependent
+@Provider
 @Priority(Priorities.AUTHENTICATION)
 public class AuthenticationFilter implements ContainerRequestFilter {
 
