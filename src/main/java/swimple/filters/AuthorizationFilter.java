@@ -15,9 +15,9 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.nio.file.AccessDeniedException;
 
-@Provider
-@Dependent
-@Priority(Priorities.AUTHORIZATION)
+//@Provider
+//@Dependent
+//@Priority(Priorities.AUTHORIZATION)
 public class AuthorizationFilter implements ContainerRequestFilter {
 
     @Context

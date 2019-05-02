@@ -20,7 +20,7 @@ import javax.ws.rs.ext.Provider;
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 
-@Provider
+@Authenticated
 @Dependent
 @Priority(Priorities.AUTHENTICATION)
 public class AuthenticationFilter implements ContainerRequestFilter {
