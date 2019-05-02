@@ -61,6 +61,7 @@
           <element id="library" level="project" name="Maven: org.glassfish.hk2.external:jakarta.inject:2.5.0" />
           <element id="library" level="project" name="Maven: javax.validation:validation-api:2.0.1.Final" />
           <element id="library" level="project" name="Maven: org.primefaces:primefaces:6.2" />
+          <element id="library" level="project" name="Maven: io.sentry:sentry:1.7.16" />
         </element>
       </element>
       <element id="directory" name="META-INF">

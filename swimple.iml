@@ -148,5 +148,6 @@
     <orderEntry type="library" name="Maven: org.glassfish.hk2.external:jakarta.inject:2.5.0" level="project" />
     <orderEntry type="library" name="Maven: javax.validation:validation-api:2.0.1.Final" level="project" />
     <orderEntry type="library" name="Maven: org.primefaces:primefaces:6.2" level="project" />
+    <orderEntry type="library" name="Maven: io.sentry:sentry:1.7.16" level="project" />
   </component>
 </module>
