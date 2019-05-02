@@ -24,6 +24,7 @@ public class Application extends javax.ws.rs.core.Application {
         classes.add(UsersController.class);
         classes.add(AuthenticationFilter.class);
         classes.add(Authenticated.class);
+        classes.add(CommentUpdatesController.class);
 
         classes.add(JacksonFeature.class);
 

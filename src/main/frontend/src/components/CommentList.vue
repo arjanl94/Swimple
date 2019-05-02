@@ -15,6 +15,8 @@
     import {mapState} from "vuex";
     import CommentListItem from "./CommentListItem";
 
+    let ws;
+
     export default {
         name: "comment-list",
 
@@ -50,6 +52,27 @@
 
         mounted() {
             this.$store.dispatch("comments/getAllComments", this.training);
+
+            const wsURI = `ws://localhost:8080/swimple/ws-comments/${this.training.id}`
+            ws = new WebSocket(wsURI);
+
+            const that = this;
+            const refresh = function() {
+                that.$store.dispatch("comments/getAllComments", that.training);
+            }
+
+            ws.onopen = function() {
+                console.log('Opened up connection');
+            };
+
+            ws.onmessage = function(e) {
+                console.log('--MESSAGE', e.data);
+                refresh();
+            };
+        },
+
+        beforeDestroy() {
+            ws.close();
         }
     }
 </script>
